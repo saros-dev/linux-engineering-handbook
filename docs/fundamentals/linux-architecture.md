@@ -1,86 +1,127 @@
 # Linux Architecture
 
-> Linux is a layered system built around the Linux Kernel. Understanding its architecture is essential for debugging, performance tuning, and system design.
+> Linux is a layered system designed around the Linux Kernel.  
+> Everything in the system ultimately interacts with the kernel through system calls.
 
 ---
 
-## 🧠 High-Level Overview
+## 🧭 Overview
 
-Linux follows a layered architecture:
+Linux follows a **layered architecture model**:
 
-```text
-+-----------------------------------+
-|        User Applications          |
-| (bash, nginx, python, docker)     |
-+-----------------------------------+
-|       System Libraries            |
-|        (glibc, etc.)              |
-+-----------------------------------+
-|         System Calls              |
-|   (open, read, write, fork)      |
-+-----------------------------------+
-|           Linux Kernel            |
-|-----------------------------------|
-| Process | Memory | FS | Network   |
-+-----------------------------------+
-|            Hardware               |
-| CPU | RAM | Disk | NIC            |
-+-----------------------------------+
+- Applications run in User Space
+- Kernel runs in Kernel Space
+- Communication happens via System Calls
+
+This separation is the core of Linux design.
+
+---
+
+## 🧠 High-Level Architecture
+
+```text id="arch1"
++--------------------------------------+
+|          User Applications           |
+|  (bash, nginx, python, docker)      |
++--------------------------------------+
+|          System Libraries           |
+|        (glibc, musl, etc.)          |
++--------------------------------------+
+|          System Call Interface      |
+|  (open, read, write, fork, exec)    |
++--------------------------------------+
+|             Linux Kernel            |
+|--------------------------------------|
+| Process | Memory | FS | Network     |
++--------------------------------------+
+|              Hardware               |
+| CPU | RAM | Disk | NIC              |
++--------------------------------------+
 ```
 
 ---
 
-## ⚡ Why This Matters
+## ⚙️ Why Architecture Matters
 
-This architecture helps you understand:
+If you understand this architecture, you can:
 
-- Why processes crash
-- Why memory leaks happen
-- How containers work
-- Why CPU spikes occur
-- How networking actually functions
-- How system calls bridge apps and kernel
+- Debug production issues
+- Understand performance bottlenecks
+- Analyze memory leaks
+- Understand container internals
+- Understand networking issues
+- Work with observability tools (strace, perf, eBPF)
 
 ---
 
 ## 🔵 User Space vs Kernel Space
 
-```text
-USER SPACE                         KERNEL SPACE
-+------------------+              +----------------------+
-| Applications     |              | Process Scheduler    |
-| bash, nginx      |              | Memory Manager       |
-| python, docker   |              | Network Stack        |
-+------------------+              | File System (VFS)    |
-                                  | Device Drivers       |
-                                  +----------------------+
+```text id="space1"
+USER SPACE                        KERNEL SPACE
++----------------------+        +----------------------+
+| Applications         |        | Process Scheduler    |
+| bash, nginx, python  |        | Memory Manager       |
+| docker, system tools |        | Network Stack        |
++----------------------+        | File System (VFS)    |
+                                 | Device Drivers       |
+                                 +----------------------+
 ```
-
-### Key Difference
-
-| User Space | Kernel Space |
-|------------|-------------|
-| Limited access | Full hardware access |
-| Safe | Critical |
-| Uses system calls | Direct hardware control |
 
 ---
 
-## 🔗 System Call Flow
+### 🟢 User Space
 
-When a program wants to access hardware:
+Runs:
 
-```text
+- Applications
+- Shells
+- Services (nginx, sshd)
+
+Characteristics:
+
+- No direct hardware access
+- Uses system calls
+- Safe and isolated
+
+---
+
+### 🔴 Kernel Space
+
+Runs:
+
+- Core OS logic
+- Drivers
+- Scheduling system
+
+Responsibilities:
+
+- CPU scheduling
+- Memory management
+- I/O operations
+- File systems
+- Networking
+
+---
+
+## 🔗 System Call Mechanism
+
+User applications cannot talk to hardware directly.
+
+They must use **system calls**.
+
+```text id="syscall1"
 Application
     ↓
 glibc wrapper
     ↓
-System Call (open, read, write)
+System Call (open, read, write, fork)
     ↓
-Linux Kernel
+Kernel
     ↓
-Driver / Hardware
+Hardware
 ```
+
+---
 
 ### Example
 
@@ -90,86 +131,68 @@ open("file.txt")
 
 Becomes:
 
-```text
-User App → glibc → sys_open → Kernel → Disk
+```text id="syscall2"
+User Program → glibc → sys_open → Kernel → Filesystem → Disk
 ```
 
 ---
 
-## ⚙️ Linux Kernel Internals
+## 🧱 Kernel Subsystems
 
-Inside the kernel:
+Linux kernel is modular.
 
-```text
-+-----------------------------+
-| Process Scheduler          |
-| Memory Manager             |
-| Virtual File System (VFS)  |
-| Networking Stack           |
-| Device Drivers            |
-+-----------------------------+
-```
+### 1. Process Management
 
----
-
-### 🧵 Process Management
+Handles:
 
 - fork()
 - exec()
-- wait()
-- kill()
+- scheduling
+- context switching
 
-Kernel is responsible for:
-
-- creating processes
-- switching context
-- scheduling CPU time
+```text id="proc1"
+Process → Scheduler → CPU Core
+```
 
 ---
 
-### 🧠 Memory Management
+### 2. Memory Management
 
-```text
+```text id="mem1"
 Virtual Memory
-     ↓
+      ↓
 Paging System
-     ↓
+      ↓
 Physical RAM
-     ↓
+      ↓
 Swap (Disk)
 ```
 
-Kernel ensures:
+Features:
 
-- isolation between processes
-- memory safety
-- paging/swapping
+- Isolation between processes
+- Memory protection
+- Page caching
 
 ---
 
-### 📁 File System (VFS)
+### 3. Virtual File System (VFS)
 
-Linux treats everything as a file:
+Linux treats everything as a file.
 
-```text
-Disk → ext4 / xfs / btrfs
-             ↓
-           VFS
-             ↓
-   unified file interface
+```text id="vfs1"
+ext4 / xfs / btrfs
+        ↓
+       VFS
+        ↓
+Unified file interface (/proc, /dev, /sys)
 ```
 
-Examples:
-
-- /dev/sda → disk
-- /proc → process info
-- /sys → kernel info
-
 ---
 
-### 🌐 Networking Stack
+### 4. Networking Stack
 
-```text
+```text id="net1"
 Application
     ↓
 Socket API
@@ -180,8 +203,23 @@ IP Layer
     ↓
 Network Driver
     ↓
-NIC (Network Card)
+Hardware (NIC)
 ```
+
+---
+
+### 5. Device Drivers
+
+Bridge between:
+
+- Kernel
+- Hardware devices
+
+Examples:
+
+- Disk drivers
+- GPU drivers
+- Network drivers
 
 ---
 
@@ -193,37 +231,37 @@ Example:
 ./app
 ```
 
-Flow:
+### Step-by-step flow:
 
-```text
+```text id="run1"
 Shell (bash)
-   ↓ fork()
-   ↓ exec()
+    ↓ fork()
+    ↓ exec()
 Kernel loads binary
-   ↓
-Memory allocated
-   ↓
+    ↓
+Memory allocation
+    ↓
 Scheduler assigns CPU
-   ↓
-Process runs
+    ↓
+Process starts execution
 ```
 
 ---
 
-## 📂 Real Example: Reading a File
+## 📂 Real Example: File Read
 
-```text
-App → fopen()
-    ↓
-glibc
-    ↓
-open() syscall
-    ↓
-Kernel VFS
-    ↓
-Filesystem driver
-    ↓
-Disk
+```text id="file1"
+Application → fopen()
+           ↓
+        glibc
+           ↓
+        open() syscall
+           ↓
+        Kernel VFS
+           ↓
+        Filesystem driver
+           ↓
+        Disk
 ```
 
 ---
@@ -233,21 +271,23 @@ Disk
 ```bash
 uname -a        # kernel info
 lscpu           # CPU info
-lsblk           # disks
-free -h         # memory
+lsblk           # storage devices
+free -h         # memory usage
 cat /proc/cpuinfo
 cat /proc/meminfo
 ```
 
 ---
 
-## 🚨 Real Production Issues
+## 🚨 Real Production Scenarios
 
-### High CPU
+### High CPU Usage
 
-```text
-Process stuck → CPU spike → scheduler pressure
-```
+Possible causes:
+
+- Infinite loop in user space
+- Kernel threads
+- I/O wait
 
 Tools:
 
@@ -259,11 +299,13 @@ pidstat
 
 ---
 
-### Memory Leak
+### Memory Pressure
 
-```text
-App allocates memory → never frees → swap usage → OOM
-```
+Possible causes:
+
+- Memory leak
+- Cache pressure
+- Swap usage
 
 Tools:
 
@@ -271,6 +313,23 @@ Tools:
 free -h
 vmstat
 dmesg | grep -i oom
+```
+
+---
+
+### Disk / IO Issues
+
+Symptoms:
+
+- Slow response
+- High iowait
+
+Tools:
+
+```bash
+iostat
+iotop
+df -h
 ```
 
 ---
@@ -283,20 +342,22 @@ dmesg | grep -i oom
 
 ### Intermediate
 - What happens when you run a program?
-- What is a system call?
+- What is system call?
 
 ### Advanced
-- How does context switching work?
-- What happens inside fork()?
+- What happens during context switching?
+- How does Linux scheduling work?
+- How does VFS work internally?
 
 ---
 
 ## 💡 Key Takeaways
 
-- Linux is layered, not monolithic in usage
+- Linux is a layered architecture system
 - Kernel is the core of everything
-- System calls are the bridge between worlds
-- Understanding flow > memorizing commands
+- User space never touches hardware directly
+- System calls are the bridge
+- Understanding flow is more important than memorization
 
 ---
 
