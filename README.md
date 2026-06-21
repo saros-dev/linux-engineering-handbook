@@ -1,3 +1,9 @@
+![License](https://img.shields.io/badge/license-MIT-green)
+![Status](https://img.shields.io/badge/status-active-brightgreen)
+![Open Source](https://img.shields.io/badge/open--source-yes-blue)
+
+
+
 # Linux Engineering Handbook
 
 > A structured, open-source Linux handbook for DevOps Engineers, SREs, Platform Engineers, System Administrators, and backend engineers who want deep understanding of Linux systems.
