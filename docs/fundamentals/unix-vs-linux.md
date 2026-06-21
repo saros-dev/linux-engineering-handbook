@@ -54,7 +54,7 @@ Unix became the foundation of modern operating systems.
 ## 🐧 Linux Origins
 
 
-::contentReference[oaicite:1]{index=1}
+
 
 
 Linux was created by:
