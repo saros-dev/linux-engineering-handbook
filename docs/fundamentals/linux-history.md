@@ -212,4 +212,4 @@ And it became one of the most important technologies in modern computing.
 
 ## ➜ Next Chapter
 
-👉 Unix vs Linux
+👉 [Unix vs Linux](docs/fundamentals/unix-vs-linux.md)
