@@ -232,4 +232,4 @@ UNIX SYSTEM                 LINUX SYSTEM
 
 ## ➜ Next Chapter
 
-👉 Linux Architecture
+👉 [Linux Architecture](linux-architecture.md)
