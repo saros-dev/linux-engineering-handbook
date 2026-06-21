@@ -31,7 +31,7 @@ Unix (1970s - Bell Labs)
 ## 👨‍🔬 Unix Origins
 
 
-::contentReference[oaicite:0]{index=0}
+
 
 
 Unix was developed at **Bell Labs** by:
