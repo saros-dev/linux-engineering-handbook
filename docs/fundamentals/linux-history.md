@@ -24,7 +24,6 @@ It is the result of:
 ### Linus Torvalds
 
 
-::contentReference[oaicite:0]{index=0}
 
 
 - Born: 1969, Finland
