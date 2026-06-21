@@ -363,4 +363,4 @@ df -h
 
 ## ➜ Next Chapter
 
-👉 Kernel vs User Space (Deep Dive)
+👉 Kernel vs User Space (Deep Dive)[kernel-vs-userspace.md]
