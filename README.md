@@ -85,7 +85,7 @@ Containers (Linux-level)
 - [Unix vs Linux](docs/fundamentals/unix-vs-linux.md)
 - [Linux Architecture](docs/fundamentals/linux-architecture.md)
 - [Kernel vs User Space](docs/fundamentals/kernel-vs-userspace.md)
-- [Linux Distributions](docs/fundamentals/linux-distributions.md)
+- [Linux Distributions](docs/fundamentals/distributions.md)
 
 ---
 
