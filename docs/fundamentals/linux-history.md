@@ -186,7 +186,7 @@ Linux succeeded because:
 - What year was Linux released?
 
 ### Intermediate
-- What is difference between Linux and Unix?[Answer](docs/fundamentals/unix-vs-linux.md)
+- What is difference between Linux and Unix?[Answer](unix-vs-linux.md)
 - What is GNU?
 
 ### Advanced
@@ -212,4 +212,4 @@ And it became one of the most important technologies in modern computing.
 
 ## ➜ Next Chapter
 
-👉 [Unix vs Linux](docs/fundamentals/unix-vs-linux.md)
+👉 [Unix vs Linux](unix-vs-linux.md)
