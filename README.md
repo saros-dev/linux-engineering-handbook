@@ -89,11 +89,11 @@ Containers (Linux-level)
 
 ---
 
-### 2. Command Line
-- [Navigation](docs/commands/navigation.md)
-- [File Operations](docs/commands/file-operations.md)
-- [Text Processing](docs/commands/text-processing.md)
-- [Searching](docs/commands/searching.md)
+### 2. [Command Line](docs/command-line/Command-line.md)
+- [Navigation](docs/command-line/navigation/navigation.md)
+- [File Operations](docs/command-line/file-operations/file-operations.md)
+- [Text Processing](docs/command-line/text-processing/text-processing.md)
+- [Searching](docs/command-line/searching/searching.md)
 
 ---
 

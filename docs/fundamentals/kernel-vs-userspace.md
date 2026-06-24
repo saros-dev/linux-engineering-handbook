@@ -379,9 +379,9 @@ Even root operates through kernel mechanisms and restrictions.
 - System calls are the only bridge between them
 - Isolation ensures stability and security
 - Many modern systems (Docker, Kubernetes, Nginx, databases) depend heavily on kernel features
-```
+
 
 
 ## ➜ Next Chapter
 
-👉 Linux Distributions
+👉 [Linux Distributions](distributions.md)

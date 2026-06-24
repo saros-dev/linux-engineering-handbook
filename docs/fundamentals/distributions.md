@@ -374,10 +374,10 @@ Most distros share:
 - Distribution = full operating system built around Linux
 - Distros mainly differ in package management and system design
 - Choice of distro depends on use case (server, desktop, enterprise)
-```
+
 
 
 
 ## ➜ Next Chapter
 
-👉 Kernel vs User Space (Deep Dive)[kernel-vs-userspace.md]
+👉 [Command Line](../command-line/Command-line.md)

@@ -66,10 +66,10 @@ Recommended order:
 
 # Sections
 
-- [Navigation](navigation.md)
-- [File Operations](file-operations.md)
-- [Text Processing](text-processing.md)
-- [Searching](searching.md)
+- [Navigation](../command-line/navigation/navigation.md)
+- [File Operations](../command-line/file-operations/file-operations.md)
+- [Text Processing](../command-line/text-processing/text-processing.md)
+- [Searching](../command-line/searching/searching.md)
 
 ---
 
