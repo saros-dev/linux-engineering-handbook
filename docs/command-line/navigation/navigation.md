@@ -351,9 +351,9 @@ This builds real navigation muscle memory.
 - Absolute paths start from `/`
 - Relative paths depend on current location
 - `~`, `.`, `..`, `-` are essential shortcuts
-```
+
 
 
 ## ➜ Next Chapter
 
-👉 File Operations[./file-operations/file-operations.md]
+👉 [File Operations](../file-operations/file-operations.md)
